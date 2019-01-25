@@ -19,14 +19,5 @@ public class InputHandler : MonoBehaviour
         {
             playerController.BeginJump();
         }
-
-        if (Input.GetButtonDown("Crouch"))
-        {
-            playerController.BeginCrouch();
-        }
-        else if (Input.GetButtonUp("Crouch"))
-        {
-            playerController.EndCrouch();
-        }
     }
 }

@@ -6,7 +6,6 @@ public class PlayerController : MonoBehaviour
 {
     [HideInInspector] public float xAxisDelta = 0f;
     [HideInInspector] public bool isJumping = false;
-    [HideInInspector] public bool isCrouched = false;
 
     [SerializeField] LayerMask groundLayer;
     [SerializeField] Transform groundCheckTransform;
@@ -48,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
         float horizontalMovementDelta = (xAxisDelta * movementSpeed) * Time.fixedDeltaTime;
 
-        Move(horizontalMovementDelta, isJumping, isCrouched);
+        Move(horizontalMovementDelta, isJumping);
         isJumping = false;
     }
 
@@ -57,10 +56,9 @@ public class PlayerController : MonoBehaviour
         float animMovementDelta = Mathf.Abs(xAxisDelta * movementSpeed);
 
         animator.SetFloat("MovementSpeed", animMovementDelta);
-        animator.SetBool("IsCrouching", isCrouched);
     }
 
-    void Move(float movementDelta, bool isJumping, bool isCrouched)
+    void Move(float movementDelta, bool isJumping)
     {
         if (isJumping)
         {
@@ -114,15 +112,5 @@ public class PlayerController : MonoBehaviour
         jumpCount = 0;
         isJumping = false;
         animator.SetBool("IsJumping", false);
-    }
-
-    public void BeginCrouch()
-    {
-        isCrouched = true;
-    }
-
-    public void EndCrouch()
-    {
-        isCrouched = false;
     }
 }
