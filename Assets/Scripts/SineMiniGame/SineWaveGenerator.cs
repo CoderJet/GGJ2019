@@ -30,14 +30,14 @@ public class SineWaveGenerator : MonoBehaviour
 
     [SerializeField] private Gradient WaveColour;
 
-    [Range(200f, 400f)]
+    //[Range(200f, 400f)]
     [SerializeField]
     private int wavelength = 400;
 
-    [Range(FREQ_MIN_VALUE, FREQ_MAX_VALUE)]
+    //[Range(FREQ_MIN_VALUE, FREQ_MAX_VALUE)]
     [SerializeField] private float frequency = 50;
     
-    [Range(AMP_MIN_VALUE, AMP_MAX_VALUE)]
+    //[Range(AMP_MIN_VALUE, AMP_MAX_VALUE)]
     [SerializeField] private float amplifier = 2f;
 
     private float thickness = 0.2f;
