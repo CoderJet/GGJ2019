@@ -1,17 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
-    public float movementSpeed = 1f;
+    public Transform groundCheckTransform;
+    public LayerMask groundLayer;
+
+    public float groundCheckRadius = 0.2f;
+    public float movementSpeed = 1.0f;
+    public float jumpForce = 1.0f;
+
     public int maxJumps = 2;
 
     Animator animator;
     Rigidbody2D rigidbody2D;
 
     float horizontalMovementDelta = 0f;
-    bool isJumping = false;
+
     int jumpCount = 0;
+
+    bool isJumping = false;
+    bool isGrounded = false;
+    bool isFacingRight = true;
 
     void Start()
     {
@@ -26,9 +38,16 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector2 movementDirection = new Vector2(horizontalMovementDelta, 0.0f);
-        Vector2 transDirection = transform.TransformDirection(movementDirection) * Time.fixedDeltaTime;
-        rigidbody2D.AddForce(transDirection);
+        bool wasGrounded = isGrounded;
+        isGrounded = IsGrounded();
+
+        if (!wasGrounded && isGrounded)
+        {
+            EndJump();
+        }
+
+        Move(horizontalMovementDelta, isJumping);
+        isJumping = false;
     }
 
     public void SetHorizontalMovementDelta(float movementDelta)
@@ -51,5 +70,52 @@ public class PlayerController : MonoBehaviour
         jumpCount = 0;
         isJumping = false;
         animator.SetBool("IsJumping", false);
+    }
+
+    bool IsGrounded()
+    {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(groundCheckTransform.position, groundCheckRadius, groundLayer);
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.gameObject != gameObject)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    void Move(float movementDelta, bool isJumping)
+    {
+        Vector2 movementDirection = new Vector2(movementDelta, 0.0f);
+
+        if (isJumping)
+        {
+            movementDirection.y = jumpForce;
+        }
+
+        if ((movementDelta > 0 && !isFacingRight) || (movementDelta < 0 && isFacingRight))
+        {
+            FlipPlayer();
+        }
+
+        if (!isGrounded)
+        {
+            movementDirection.x = 0;
+        }
+
+        Vector2 transDirection = transform.TransformDirection(movementDirection) * Time.fixedDeltaTime;
+        rigidbody2D.AddForce(transDirection);
+    }
+
+    void FlipPlayer()
+    {
+        isFacingRight = !isFacingRight;
+
+        Vector3 currentScale = transform.localScale;
+        currentScale.x *= -1;
+        transform.localScale = currentScale;
     }
 }
