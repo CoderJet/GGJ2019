@@ -572,5 +572,10 @@ PrefabInstance:
       propertyPath: attractor
       value: 
       objectReference: {fileID: 307549858}
+    - target: {fileID: 5464424072126768693, guid: ac273155b969abd49b0953cdb4cbca37,
+        type: 3}
+      propertyPath: groundCheckRadius
+      value: 0.1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac273155b969abd49b0953cdb4cbca37, type: 3}

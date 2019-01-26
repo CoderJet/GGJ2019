@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
 
     public void BeginJump()
     {
-        if (jumpCount < maxJumps)
+        if ((jumpCount < maxJumps) || (maxJumps == 1 && isGrounded))
         {
             jumpCount++;
             isJumping = true;
@@ -117,5 +117,11 @@ public class PlayerController : MonoBehaviour
         Vector3 currentScale = transform.localScale;
         currentScale.x *= -1;
         transform.localScale = currentScale;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(groundCheckTransform.position, groundCheckRadius);
     }
 }

@@ -7,8 +7,8 @@ public class GravityAttractor : MonoBehaviour
 
     public void Attract(Transform body)
     {
-        Vector3 gravityUp = (body.position - transform.position).normalized;
-        Vector3 localUp = body.up;
+        Vector2 gravityUp = (body.position - transform.position).normalized;
+        Vector2 localUp = body.up;
 
         Rigidbody2D attractedRigidbody2D = body.GetComponent<Rigidbody2D>();
 
