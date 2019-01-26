@@ -23,7 +23,14 @@ public class InputHandler : MonoBehaviour
 
         if (Input.GetButtonDown("Pickup"))
         {
-            playerController.PickupObject();
+            if (!playerController.GetHoldingState())
+            {
+                playerController.PickupObject();
+            }
+            else
+            {
+                playerController.DropObject();
+            }
         }
     }
 }

@@ -5,27 +5,35 @@ using System.Collections;
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
+    public Vector3 pickupHoldPosition;
+    public Vector2 reachBoxSize;
+    public Transform reachOffsetTransform;
     public Transform groundCheckTransform;
     public LayerMask groundLayer;
+    public LayerMask pickupLayer;
 
     public float groundCheckRadius = 0.2f;
     public float movementSpeed = 1.0f;
     public float jumpForce = 1.0f;
     public float maxVelocity = 1000f;
-    public float pickupReachRadius = 5f;
 
     public int maxJumps = 2;
 
     Animator animator;
     Rigidbody2D rigidbody2D;
 
+    Collider2D[] pickupColliders;
+
     float horizontalMovementDelta = 0f;
+
+    GameObject currentlyHeldObject;
 
     int jumpCount = 0;
 
     bool isJumping = false;
     bool isGrounded = false;
     bool isFacingRight = true;
+    bool isHoldingObject = false;
 
     void Start()
     {
@@ -47,6 +55,8 @@ public class PlayerController : MonoBehaviour
         {
             EndJump();
         }
+
+        pickupColliders = Physics2D.OverlapBoxAll(reachOffsetTransform.position, reachBoxSize, 0, pickupLayer);
 
         Move(horizontalMovementDelta, isJumping);
         isJumping = false;
@@ -128,11 +138,44 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(groundCheckTransform.position, groundCheckRadius);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, pickupReachRadius);
+        Gizmos.DrawWireCube(reachOffsetTransform.position, reachBoxSize);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position + pickupHoldPosition, .2f);
     }
 
     public void PickupObject()
     {
+        foreach (Collider2D pickupCollider in pickupColliders)
+        {
+            if (pickupCollider.gameObject != gameObject)
+            {
+                GameObject pickupObject = pickupCollider.gameObject;
+                foreach (Collider c in pickupObject.GetComponents<Collider>())
+                {
+                    c.enabled = false;
+                }
 
+                pickupObject.GetComponent<Rigidbody2D>().isKinematic = true;
+                pickupObject.transform.parent = gameObject.transform;
+                pickupObject.transform.localPosition = pickupHoldPosition;
+
+                isHoldingObject = true;
+                currentlyHeldObject = pickupObject;
+            }
+        }
+    }
+
+    public void DropObject()
+    {
+        currentlyHeldObject.GetComponent<Rigidbody2D>().isKinematic = false;
+        currentlyHeldObject.transform.parent = null;
+        isHoldingObject = false;
+        currentlyHeldObject = null;
+    }
+
+    public bool GetHoldingState()
+    {
+        return isHoldingObject;
     }
 }
