@@ -81,7 +81,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0
   m_GravityScale: 1
   m_Material: {fileID: 0}
@@ -189,9 +189,11 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 512
-  groundCheckRadius: 2
+  horizontalMovementDampening: 1
+  groundCheckRadius: 0.1
   movementSpeed: 500
   jumpForce: 10000
+  maxVelocity: 7
   maxJumps: 1
 --- !u!114 &568875583
 MonoBehaviour:

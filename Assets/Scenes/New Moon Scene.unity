@@ -156,6 +156,10 @@ MonoBehaviour:
   baseDistanceTransition: 10
   baseRenderer: {fileID: 1967404522}
   fadeSpeed: 1.5
+  sineWaveMinigameSpot: {fileID: 0}
+  sineGame: {fileID: 0}
+  jigsawMinigameSpot: {fileID: 0}
+  jigsawGame: {fileID: 0}
   inBase: 0
 --- !u!4 &13374955
 Transform:
@@ -587,7 +591,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.010946958, g: 0.02870239, b: 0.05660379, a: 0}
+  m_BackGroundColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -628,7 +632,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 512690086}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 29.404491, y: 2.2805367, z: 0}
+  m_LocalPosition: {x: 29.404552, y: 2.2805367, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1030065079}
@@ -1014,7 +1018,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200384147}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 29.404491, y: 2.2805367, z: 0}
+  m_LocalPosition: {x: 29.404552, y: 2.2805367, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 970590243}
@@ -1136,6 +1140,11 @@ PrefabInstance:
       propertyPath: attractor
       value: 
       objectReference: {fileID: 298947370}
+    - target: {fileID: 5464424072126768692, guid: ac273155b969abd49b0953cdb4cbca37,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 5464424072126768693, guid: ac273155b969abd49b0953cdb4cbca37,
         type: 3}
       propertyPath: maxJumps
@@ -1160,6 +1169,26 @@ PrefabInstance:
         type: 3}
       propertyPath: baseDistanceTransition
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464424072126768693, guid: ac273155b969abd49b0953cdb4cbca37,
+        type: 3}
+      propertyPath: maxVelocity
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464424072126768693, guid: ac273155b969abd49b0953cdb4cbca37,
+        type: 3}
+      propertyPath: jumpForce
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464424072126768693, guid: ac273155b969abd49b0953cdb4cbca37,
+        type: 3}
+      propertyPath: movementSpeed
+      value: 750
+      objectReference: {fileID: 0}
+    - target: {fileID: 5464424072126768693, guid: ac273155b969abd49b0953cdb4cbca37,
+        type: 3}
+      propertyPath: pickupReachRadius
+      value: 1.25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac273155b969abd49b0953cdb4cbca37, type: 3}
