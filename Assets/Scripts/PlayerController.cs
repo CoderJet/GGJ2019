@@ -7,11 +7,12 @@ public class PlayerController : MonoBehaviour
 {
     public Transform groundCheckTransform;
     public LayerMask groundLayer;
-    
+
     public float groundCheckRadius = 0.2f;
     public float movementSpeed = 1.0f;
     public float jumpForce = 1.0f;
     public float maxVelocity = 1000f;
+    public float pickupReachRadius = 5f;
 
     public int maxJumps = 2;
 
@@ -125,5 +126,13 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(groundCheckTransform.position, groundCheckRadius);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, pickupReachRadius);
+    }
+
+    public void PickupObject()
+    {
+
     }
 }

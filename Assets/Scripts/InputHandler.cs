@@ -20,5 +20,10 @@ public class InputHandler : MonoBehaviour
         {
             playerController.BeginJump();
         }
+
+        if (Input.GetButtonDown("Pickup"))
+        {
+            playerController.PickupObject();
+        }
     }
 }
