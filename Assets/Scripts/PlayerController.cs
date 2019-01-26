@@ -7,10 +7,11 @@ public class PlayerController : MonoBehaviour
 {
     public Transform groundCheckTransform;
     public LayerMask groundLayer;
-
+    
     public float groundCheckRadius = 0.2f;
     public float movementSpeed = 1.0f;
     public float jumpForce = 1.0f;
+    public float maxVelocity = 1000f;
 
     public int maxJumps = 2;
 
@@ -108,6 +109,7 @@ public class PlayerController : MonoBehaviour
 
         Vector2 transDirection = transform.TransformDirection(movementDirection) * Time.fixedDeltaTime;
         rigidbody2D.AddForce(transDirection);
+        rigidbody2D.velocity = new Vector2(Mathf.Clamp(rigidbody2D.velocity.x, maxVelocity * -1, maxVelocity), Mathf.Clamp(rigidbody2D.velocity.y, maxVelocity * -1, maxVelocity));
     }
 
     void FlipPlayer()
