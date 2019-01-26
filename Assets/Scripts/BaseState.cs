@@ -20,7 +20,7 @@ public class BaseState : MonoBehaviour
     public GameObject sineGame;
     public GameObject jigsawMinigameSpot;
     public GameObject jigsawGame;
-
+    
     private Transform playerTransform;
     [SerializeField]
     private bool inBase = false;
@@ -37,11 +37,23 @@ public class BaseState : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        inBase = (Vector2.Distance(transform.position, playerTransform.position) < baseDistanceTransition);
+        //inBase = (Vector2.Distance(transform.position, playerTransform.position) < baseDistanceTransition);
 
-        TriggerCameraTransition();
+        //TriggerCameraTransition();
         
         // We can do some other stuff with minigames in here possibly?
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        inBase = true;
+        TriggerCameraTransition();
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        inBase = false;
+        TriggerCameraTransition();
     }
 
     void TriggerCameraTransition()
