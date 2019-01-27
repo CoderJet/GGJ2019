@@ -5,15 +5,18 @@ using System.Collections;
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
+    public InventoryManager inventoryManager;
+    public GameObject crosshair;
     public Vector3 pickupHoldPosition;
     public Vector2 reachBoxSize;
-    public Vector3 defaultCrosshairPosition;
+    public Vector2 crosshairMaximums;
+    public Vector2 crosshairMinimums;
     public Transform reachOffsetTransform;
     public Transform groundCheckTransform;
-    public Transform crosshairTransform;
     public LayerMask groundLayer;
     public LayerMask pickupLayer;
 
+    public float crosshairSpeed = 1f;
     public float groundCheckRadius = 0.2f;
     public float movementSpeed = 1.0f;
     public float jumpForce = 1.0f;
@@ -43,12 +46,16 @@ public class PlayerController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rigidbody2D = GetComponent<Rigidbody2D>();
+        crosshair.SetActive(false);
     }
 
     void Update()
     {
         pickupColliders = Physics2D.OverlapBoxAll(reachOffsetTransform.position, reachBoxSize, 0, pickupLayer);
-        animator.SetFloat("Speed", Mathf.Abs(horizontalMovementDelta));
+        if (!isAiming)
+        {
+            animator.SetFloat("Speed", Mathf.Abs(horizontalMovementDelta));
+        }
     }
 
     void FixedUpdate()
@@ -104,25 +111,25 @@ public class PlayerController : MonoBehaviour
 
     void Move(float movementDelta, bool isJumping)
     {
-        Vector2 movementDirection = new Vector2(movementDelta, 0.0f);
-
-        if (isJumping)
-        {
-            movementDirection.y = jumpForce;
-        }
-
-        if ((movementDelta > 0 && !isFacingRight) || (movementDelta < 0 && isFacingRight))
-        {
-            FlipPlayer();
-        }
-
-        if (!isGrounded)
-        {
-            movementDirection.x = 0;
-        }
-
         if (!isAiming)
         {
+            Vector2 movementDirection = new Vector2(movementDelta, 0.0f);
+
+            if (isJumping)
+            {
+                movementDirection.y = jumpForce;
+            }
+
+            if ((movementDelta > 0 && !isFacingRight) || (movementDelta < 0 && isFacingRight))
+            {
+                FlipPlayer();
+            }
+
+            if (!isGrounded)
+            {
+                movementDirection.x = 0;
+            }
+
             Vector2 transDirection = transform.TransformDirection(movementDirection) * Time.fixedDeltaTime;
             rigidbody2D.AddForce(transDirection);
             rigidbody2D.velocity = new Vector2(Mathf.Clamp(rigidbody2D.velocity.x, maxVelocity * -1, maxVelocity), Mathf.Clamp(rigidbody2D.velocity.y, maxVelocity * -1, maxVelocity));
@@ -169,6 +176,7 @@ public class PlayerController : MonoBehaviour
                 isHoldingObject = true;
                 currentlyHeldObject = pickupObject;
             }
+            break;
         }
     }
 
@@ -187,8 +195,13 @@ public class PlayerController : MonoBehaviour
 
     public void BeginAim()
     {
-        if (isGrounded)
+        if (isGrounded && !isAiming)
         {
+            crosshair.SetActive(true);
+            Rigidbody2D crosshairRigidbody = crosshair.GetComponent<Rigidbody2D>();
+            crosshairRigidbody.rotation = rigidbody2D.rotation;
+            crosshairRigidbody.position = rigidbody2D.position;
+            crosshairRigidbody.freezeRotation = true;
             rigidbody2D.velocity = Vector2.zero;
             rigidbody2D.angularVelocity = 0.0f;
             isAiming = true;
@@ -198,23 +211,74 @@ public class PlayerController : MonoBehaviour
     public void StopAim()
     {
         isAiming = false;
-        crosshairTransform.localPosition = defaultCrosshairPosition;
+        crosshair.SetActive(false);
     }
 
     public void FireHeldObject()
     {
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(pickupHoldPosition);
-        Vector3 direction = (crosshairTransform.position - screenPosition).normalized;
+        Vector2 direction = (crosshair.transform.position - pickupHoldPosition).normalized;
         currentlyHeldObject.GetComponent<Rigidbody2D>().isKinematic = false;
         isHoldingObject = false;
         currentlyHeldObject.transform.parent = null;
-        currentlyHeldObject.GetComponent<Rigidbody2D>().AddForce(direction * firingForce);
+        currentlyHeldObject.GetComponent<Rigidbody2D>().AddForce(direction * firingForce * Time.deltaTime, ForceMode2D.Impulse);
         currentlyHeldObject = null;
         StopAim();
     }
 
-    public void MoveCrosshair(Vector2 directionalInput)
+    public void MoveCrosshair(float xPos, float yPos)
     {
-        crosshairTransform.localPosition += new Vector3(directionalInput.x, directionalInput.y, 0) * Time.deltaTime;
+        float radians = rigidbody2D.rotation * Mathf.Deg2Rad;
+        float sin = Mathf.Sin(radians);
+        float cos = Mathf.Cos(radians);
+
+        Rigidbody2D crosshairRigidbody = crosshair.GetComponent<Rigidbody2D>();
+
+        float newXPos = crosshairRigidbody.position.x + xPos * Time.deltaTime * crosshairSpeed;
+        float newYPos = crosshairRigidbody.position.y + yPos * Time.deltaTime * crosshairSpeed;
+
+        float xClampMin = rigidbody2D.position.x + crosshairMinimums.x;
+        float xClampMax = rigidbody2D.position.x + crosshairMaximums.x;
+
+        float yClampMin = rigidbody2D.position.y + crosshairMinimums.y;
+        float yClampMax = rigidbody2D.position.y + crosshairMaximums.y;
+
+        float clampedXPos = Mathf.Clamp(newXPos, AdjustXToRotation(xClampMin, yClampMin), AdjustXToRotation(xClampMax, yClampMin));
+        float clampedYPos = Mathf.Clamp(newYPos, AdjustYToRotation(yClampMin, xClampMin), AdjustYToRotation(yClampMax, xClampMin));
+
+        if ((crosshairRigidbody.position.x < rigidbody2D.position.x) && isFacingRight || (crosshairRigidbody.position.x > rigidbody2D.position.x) && !isFacingRight)
+        {
+            FlipPlayer();
+        }
+
+        Vector2 newCrosshairPosition = new Vector2(clampedXPos, clampedYPos);
+        crosshairRigidbody.MovePosition(newCrosshairPosition);
+    }
+
+    public void AddItemToInventory()
+    {
+        inventoryManager.AddItemToInventory(currentlyHeldObject);
+        currentlyHeldObject.SetActive(false);
+        currentlyHeldObject.transform.parent = null;
+        isHoldingObject = false;
+        currentlyHeldObject = null;
+    }
+
+    public float AdjustXToRotation(float x, float y)
+    {
+        float radians = rigidbody2D.rotation * Mathf.Deg2Rad;
+        float sin = Mathf.Sin(radians);
+        float cos = Mathf.Cos(radians);
+
+        return cos * x - sin * y;
+    }
+
+    public float AdjustYToRotation(float y, float x)
+    {
+        float radians = rigidbody2D.rotation * Mathf.Deg2Rad;
+        float sin = Mathf.Sin(radians);
+        float cos = Mathf.Cos(radians);
+
+        return sin * x + cos * y;
     }
 }

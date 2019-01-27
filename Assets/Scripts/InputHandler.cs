@@ -35,13 +35,21 @@ public class InputHandler : MonoBehaviour
             }
         }
 
+        if (Input.GetButtonDown("Interact"))
+        {
+            if (isHoldingItem)
+            {
+                playerController.AddItemToInventory();
+            }
+        }
+
         if (isHoldingItem)
         {
             if (Input.GetAxis("Aim") > 0)
             {
                 playerController.BeginAim();
 
-                playerController.MoveCrosshair(new Vector2(Input.GetAxis("RightStick X"), -Input.GetAxis("RightStick Y")));
+                playerController.MoveCrosshair(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
                 if (Input.GetButtonDown("Fire1") || Input.GetAxis("Fire1") > 0)
                 {
