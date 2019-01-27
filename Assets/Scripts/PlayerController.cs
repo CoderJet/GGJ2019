@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         pickupColliders = Physics2D.OverlapBoxAll(reachOffsetTransform.position, reachBoxSize, 0, pickupLayer);
+        animator.SetFloat("Speed", Mathf.Abs(horizontalMovementDelta));
     }
 
     void FixedUpdate()
