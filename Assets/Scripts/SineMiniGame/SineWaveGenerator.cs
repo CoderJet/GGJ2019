@@ -4,16 +4,11 @@ using UnityEngine;
 
 public class SineWaveGenerator : MonoBehaviour
 {
-    //const int WAVELENGTH_MIN_VALUE = 200;
-    //const int WAVELENGTH_MAX_VALUE = 400;
-
     const float FREQ_MIN_VALUE = 1f;
     const float FREQ_MAX_VALUE = 10f;
 
     const float AMP_MIN_VALUE = 100f;
     const float AMP_MAX_VALUE = 250f;
-
-    //public float step_size = 0.1f;
 
     public float Frequency
     {
@@ -31,29 +26,28 @@ public class SineWaveGenerator : MonoBehaviour
             return amplifier;
         }
     }
+
     public Camera main;
 
-    public bool calculateRandom = false;
+    [SerializeField] private bool calculateRandom = false;
 
     [SerializeField] private Gradient WaveColour;
-
-    //[Range(WAVELENGTH_MIN_VALUE, WAVELENGTH_MAX_VALUE)]
-    //[SerializeField]
     
+    [SerializeField] private int pixelWidth = 0;
 
-    private int pixelWidth = 0;
-
-    //[Range(FREQ_MIN_VALUE, FREQ_MAX_VALUE)]
+    [Range(FREQ_MIN_VALUE, FREQ_MAX_VALUE)]
     [SerializeField] private float frequency = FREQ_MIN_VALUE;
     
-    //[Range(AMP_MIN_VALUE, AMP_MAX_VALUE)]
+    [Range(AMP_MIN_VALUE, AMP_MAX_VALUE)]
     [SerializeField] private float amplifier = AMP_MIN_VALUE;
+
+    [SerializeField] private float stepSize = 0.1f;
 
     private float thickness = 0.2f;
 
     private LineRenderer lineRenderer;
 
-    public float step_size = 0.1f;
+    
 
     void Start()
     {
@@ -86,7 +80,7 @@ public class SineWaveGenerator : MonoBehaviour
             lineRenderer.positionCount = pixelWidth;
 
         //step_size = (float)wavelength / (1 / pixelWidth);
-        step_size = 1;
+        stepSize = 1;
 
         int i = 0;
         //float position_step = 0f;
