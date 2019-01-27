@@ -7,8 +7,10 @@ public class PlayerController : MonoBehaviour
 {
     public Vector3 pickupHoldPosition;
     public Vector2 reachBoxSize;
+    public Vector3 defaultCrosshairPosition;
     public Transform reachOffsetTransform;
     public Transform groundCheckTransform;
+    public Transform crosshairTransform;
     public LayerMask groundLayer;
     public LayerMask pickupLayer;
 
@@ -16,6 +18,7 @@ public class PlayerController : MonoBehaviour
     public float movementSpeed = 1.0f;
     public float jumpForce = 1.0f;
     public float maxVelocity = 1000f;
+    public float firingForce = 5f;
 
     public int maxJumps = 2;
 
@@ -30,6 +33,7 @@ public class PlayerController : MonoBehaviour
 
     int jumpCount = 0;
 
+    bool isAiming = false;
     bool isJumping = false;
     bool isGrounded = false;
     bool isFacingRight = true;
@@ -43,7 +47,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
+        pickupColliders = Physics2D.OverlapBoxAll(reachOffsetTransform.position, reachBoxSize, 0, pickupLayer);
     }
 
     void FixedUpdate()
@@ -55,8 +59,6 @@ public class PlayerController : MonoBehaviour
         {
             EndJump();
         }
-
-        pickupColliders = Physics2D.OverlapBoxAll(reachOffsetTransform.position, reachBoxSize, 0, pickupLayer);
 
         Move(horizontalMovementDelta, isJumping);
         isJumping = false;
@@ -118,9 +120,12 @@ public class PlayerController : MonoBehaviour
             movementDirection.x = 0;
         }
 
-        Vector2 transDirection = transform.TransformDirection(movementDirection) * Time.fixedDeltaTime;
-        rigidbody2D.AddForce(transDirection);
-        rigidbody2D.velocity = new Vector2(Mathf.Clamp(rigidbody2D.velocity.x, maxVelocity * -1, maxVelocity), Mathf.Clamp(rigidbody2D.velocity.y, maxVelocity * -1, maxVelocity));
+        if (!isAiming)
+        {
+            Vector2 transDirection = transform.TransformDirection(movementDirection) * Time.fixedDeltaTime;
+            rigidbody2D.AddForce(transDirection);
+            rigidbody2D.velocity = new Vector2(Mathf.Clamp(rigidbody2D.velocity.x, maxVelocity * -1, maxVelocity), Mathf.Clamp(rigidbody2D.velocity.y, maxVelocity * -1, maxVelocity));
+        }
     }
 
     void FlipPlayer()
@@ -177,5 +182,38 @@ public class PlayerController : MonoBehaviour
     public bool GetHoldingState()
     {
         return isHoldingObject;
+    }
+
+    public void BeginAim()
+    {
+        if (isGrounded)
+        {
+            rigidbody2D.velocity = Vector2.zero;
+            rigidbody2D.angularVelocity = 0.0f;
+            isAiming = true;
+        }
+    }
+
+    public void StopAim()
+    {
+        isAiming = false;
+        crosshairTransform.localPosition = defaultCrosshairPosition;
+    }
+
+    public void FireHeldObject()
+    {
+        Vector3 screenPosition = Camera.main.WorldToScreenPoint(pickupHoldPosition);
+        Vector3 direction = (crosshairTransform.position - screenPosition).normalized;
+        currentlyHeldObject.GetComponent<Rigidbody2D>().isKinematic = false;
+        isHoldingObject = false;
+        currentlyHeldObject.transform.parent = null;
+        currentlyHeldObject.GetComponent<Rigidbody2D>().AddForce(direction * firingForce);
+        currentlyHeldObject = null;
+        StopAim();
+    }
+
+    public void MoveCrosshair(Vector2 directionalInput)
+    {
+        crosshairTransform.localPosition += new Vector3(directionalInput.x, directionalInput.y, 0) * Time.deltaTime;
     }
 }
