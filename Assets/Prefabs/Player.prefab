@@ -54,7 +54,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5464424071269326607}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.75, z: 0}
+  m_LocalPosition: {x: 0, y: -0.758, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5464424072126768691}
@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 5464424072126768693}
   - component: {fileID: 568875583}
   - component: {fileID: 6509517298501855940}
+  - component: {fileID: 1215574322342129495}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -92,7 +93,7 @@ Transform:
   m_GameObject: {fileID: 5464424072126768713}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 5464424071269326606}
   - {fileID: 907106799}
@@ -133,7 +134,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.24}
+  m_Offset: {x: 0, y: -0.25}
   serializedVersion: 2
   m_Radius: 0.5057566
 --- !u!95 &5464424072126768712
@@ -189,10 +190,10 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -213866341
-  m_SortingLayer: -1
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a077a002e0833c3498cad65612c7e8e5, type: 3}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -2
+  m_Sprite: {fileID: 21300000, guid: cec73531a4e9f4b4488db0ff42488b7a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -216,8 +217,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38220e6038f521e4e9c5848dd957bf3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventoryManager: {fileID: 1215574322342129495}
+  crosshair: {fileID: 0}
   pickupHoldPosition: {x: 0.7, y: -0.25, z: 0}
-  reachBoxSize: {x: 1.25, y: 1.25}
+  reachBoxSize: {x: 1.5, y: 2}
+  crosshairMaximums: {x: 5, y: 4}
+  crosshairMinimums: {x: -5, y: 0}
   reachOffsetTransform: {fileID: 907106799}
   groundCheckTransform: {fileID: 5464424071269326606}
   groundLayer:
@@ -226,10 +231,12 @@ MonoBehaviour:
   pickupLayer:
     serializedVersion: 2
     m_Bits: 1024
+  crosshairSpeed: 3
   groundCheckRadius: 0.1
   movementSpeed: 750
   jumpForce: 10000
   maxVelocity: 50
+  firingForce: 1000
   maxJumps: 1
 --- !u!114 &568875583
 MonoBehaviour:
@@ -259,3 +266,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerController: {fileID: 5464424072126768693}
+--- !u!114 &1215574322342129495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5464424072126768713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: f065848172a970e489d52d29697b6a62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

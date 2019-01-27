@@ -7,7 +7,7 @@ public class InputHandler : MonoBehaviour
 {
     public PlayerController playerController;
 
-    void FixedUpdate()
+    void Update()
     {
         HandleInput();
     }
@@ -16,6 +16,8 @@ public class InputHandler : MonoBehaviour
     {
         playerController.SetHorizontalMovementDelta(Input.GetAxisRaw("Horizontal"));
 
+        bool isHoldingItem = playerController.GetHoldingState();
+
         if (Input.GetButtonDown("Jump"))
         {
             playerController.BeginJump();
@@ -23,13 +25,40 @@ public class InputHandler : MonoBehaviour
 
         if (Input.GetButtonDown("Pickup"))
         {
-            if (!playerController.GetHoldingState())
+            if (!isHoldingItem)
             {
                 playerController.PickupObject();
             }
             else
             {
                 playerController.DropObject();
+            }
+        }
+
+        if (Input.GetButtonDown("Interact"))
+        {
+            if (isHoldingItem)
+            {
+                playerController.AddItemToInventory();
+            }
+        }
+
+        if (isHoldingItem)
+        {
+            if (Input.GetAxis("Aim") > 0)
+            {
+                playerController.BeginAim();
+
+                playerController.MoveCrosshair(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+
+                if (Input.GetButtonDown("Fire1") || Input.GetAxis("Fire1") > 0)
+                {
+                    playerController.FireHeldObject();
+                }
+            }
+            else if (Input.GetAxis("Aim") <= 0)
+            {
+                playerController.StopAim();
             }
         }
     }
