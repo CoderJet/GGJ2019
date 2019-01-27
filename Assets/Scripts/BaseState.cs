@@ -28,6 +28,11 @@ public class BaseState : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (baseRenderer != null)
+        {
+            baseRenderer.gameObject.SetActive(true);
+        }
+
         if (player == null)
             Debug.LogError("No Player Set - SET BEFORE CONTINUING!");
 
