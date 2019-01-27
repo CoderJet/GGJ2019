@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SineWaveMiniGame : MonoBehaviour
 {
-    const float SINE_BUFFER_AMOUNT = 1f;
+    const float SINE_BUFFER_AMOUNT = 5f;
 
     [Range(0.1f, 1f)]
     [SerializeField] float deadZoneCheck = 0.3f;
