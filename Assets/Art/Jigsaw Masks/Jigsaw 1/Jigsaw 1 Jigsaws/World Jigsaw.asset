@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 59500b9041f347646ae6b842e46fd08c, type: 3}
+  m_Name: World Jigsaw
+  m_EditorClassIdentifier: 
+  jigsawPieces:
+  - {fileID: 8063629458797975141, guid: bae120e4684227148a08a84172a3ce77, type: 3}
+  - {fileID: 364060437070904798, guid: 232dd8146ae94044cb5a30b70efbfc54, type: 3}
+  - {fileID: 4622298856969192359, guid: 8c9a755109605024c9181d8c9cbb2fec, type: 3}
+  - {fileID: 5709170876785838612, guid: 368dca0e2cbeb954089f28924903520a, type: 3}
+  - {fileID: 275162955730296005, guid: 6ad89d26d27de7747afaaaa5694fcb2b, type: 3}
+  - {fileID: 2778561311982897034, guid: dd54aa6a550906d48b5e2957140d81d6, type: 3}
+  - {fileID: 832230961644009133, guid: 7599a75b039deda4eaed116d0a97a6f0, type: 3}
+  - {fileID: 3856413790827880295, guid: ff114ef4c9e8fb94ca530201189bc397, type: 3}
+  - {fileID: 607198365733938351, guid: 16de188e65d44344d9df641e248a5b84, type: 3}
+  - {fileID: 4495443084809045647, guid: 66e1bddc85dd05e4a83d0c9143d1894e, type: 3}
+  - {fileID: 8113706182265138608, guid: e3bc201b1148cc348a81248b31f97d6b, type: 3}
+  - {fileID: 8055781953802334526, guid: 8595394d909487a4995c93dd8dc2a24c, type: 3}
+  jigsawImage: {fileID: 21300000, guid: fd2a19bbcf396b14089a82937316716b, type: 3}

@@ -292,7 +292,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 263823992}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 110, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -311,7 +311,7 @@ GameObject:
   - component: {fileID: 330130625}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -357,7 +357,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 93a880b7953e21f4384317b097f494e4, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -375,7 +375,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330130624}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 110.14, y: 0.02, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1615027757}
@@ -732,6 +732,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: JoyLeft
       objectReference: {fileID: 0}
+    - target: {fileID: 4194731759954143042, guid: 7d62af759b90c774c8216bf2c6a969fc,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4194731759954143042, guid: 7d62af759b90c774c8216bf2c6a969fc,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4194731760363101550, guid: 7d62af759b90c774c8216bf2c6a969fc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -837,16 +847,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4194731759954143042, guid: 7d62af759b90c774c8216bf2c6a969fc,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4194731759954143042, guid: 7d62af759b90c774c8216bf2c6a969fc,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d62af759b90c774c8216bf2c6a969fc, type: 3}
 --- !u!1001 &4595052098532016704
@@ -860,6 +860,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: JoyRight
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595052097954465905, guid: 5efaca8693733df4ca1428291d5e8b04,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4595052097954465905, guid: 5efaca8693733df4ca1428291d5e8b04,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4595052098148288130, guid: 5efaca8693733df4ca1428291d5e8b04,
         type: 3}
@@ -966,16 +976,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4595052097954465905, guid: 5efaca8693733df4ca1428291d5e8b04,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4595052097954465905, guid: 5efaca8693733df4ca1428291d5e8b04,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5efaca8693733df4ca1428291d5e8b04, type: 3}
 --- !u!1001 &8416393697946380969
@@ -1050,14 +1050,9 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 8416393697889878915, guid: 02301c71e81048a4588445c5d6cc7873,
+    - target: {fileID: 8416393697889878912, guid: 02301c71e81048a4588445c5d6cc7873,
         type: 3}
-      propertyPath: main
-      value: 
-      objectReference: {fileID: 330130626}
-    - target: {fileID: 8416393697889878915, guid: 02301c71e81048a4588445c5d6cc7873,
-        type: 3}
-      propertyPath: calculateRandom
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8416393696629531387, guid: 02301c71e81048a4588445c5d6cc7873,
@@ -1069,6 +1064,16 @@ PrefabInstance:
         type: 3}
       propertyPath: calculateRandom
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8416393697889878915, guid: 02301c71e81048a4588445c5d6cc7873,
+        type: 3}
+      propertyPath: main
+      value: 
+      objectReference: {fileID: 330130626}
+    - target: {fileID: 8416393697889878915, guid: 02301c71e81048a4588445c5d6cc7873,
+        type: 3}
+      propertyPath: calculateRandom
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02301c71e81048a4588445c5d6cc7873, type: 3}
